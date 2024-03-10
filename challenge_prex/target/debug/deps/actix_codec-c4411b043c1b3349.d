@@ -1,0 +1,8 @@
+C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challengePrex\target\debug\deps\libactix_codec-c4411b043c1b3349.rmeta: C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\lib.rs C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\bcodec.rs C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\framed.rs C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\lines.rs
+
+C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challengePrex\target\debug\deps\actix_codec-c4411b043c1b3349.d: C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\lib.rs C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\bcodec.rs C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\framed.rs C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\lines.rs
+
+C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\lib.rs:
+C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\bcodec.rs:
+C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\framed.rs:
+C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\actix-codec-0.5.2\src\lines.rs:
