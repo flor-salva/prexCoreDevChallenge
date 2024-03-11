@@ -12,12 +12,12 @@ pub struct Cliente {
 
 #[derive(Debug, Serialize,Deserialize)]
 pub struct CreditTransaction {
-    client_id: u128,
+    client_id: u32,
     credit_amount: Decimal,
 }
 
 #[derive(Debug, Serialize,Deserialize)]
 pub struct DebitTransaction {
-    client_id: u128,
+    client_id: u32,
     debit_amount: Decimal,
 }

@@ -1,8 +1,5 @@
 use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
-use chrono::NaiveDate;
-use rust_decimal::Decimal;
-
-use crate::{request_dto::{Cliente, CreditTransaction, DebitTransaction}, response_dto::ClientBalance};
+use crate::{request_dto::{Cliente, CreditTransaction, DebitTransaction}, response_dto::ClientBalance, servicios::{buscar_cliente, AppState}};
 //use serde::{Serialize,Deserialize};
 
 pub fn config(conf: &mut web::ServiceConfig){
@@ -13,19 +10,22 @@ pub fn config(conf: &mut web::ServiceConfig){
 
 }
 
-#[get("/client_balance")]
-async fn client_balance(cliente_balance: web::Json<ClientBalance>) -> impl Responder {
+#[get("/client_balance/{user_id}")]
+async fn client_balance(path: web::Path<(u32,)>,data: web::Data<AppState>) -> impl Responder {
     
-    let cliente =  ClientBalance{client_id:1, 
-                                                client_name:String::from("Flor"),
-                                                bith_date:NaiveDate::parse_from_str("1994-10-30", "%Y-%m-%d").expect("Error al parsear la fecha"), 
-                                                document_number:String::from("38465901"), 
-                                                country:String::from("Argentina"),
-                                                balance:Decimal::new(6500015, 2)};
-    
-    //HttpResponse::Ok().body(personita.into_inner().nombre);
-    HttpResponse::Ok().json(cliente)
+let user_id= path.0;
+
+let mut cliente_balance= ClientBalance{..Default::default()};
+
+let resultado_cliente= buscar_cliente(user_id,&data,&mut cliente_balance);
+
+    if (!resultado_cliente) {
+        return HttpResponse::NotFound().body("El cliente no fue encontrado");
+    }
+
+    HttpResponse::Ok().json(cliente_balance)
 }
+
 
 #[post("/new_client")]
 async fn new_client(nuevo_cliente: web::Json<Cliente>) -> impl Responder {

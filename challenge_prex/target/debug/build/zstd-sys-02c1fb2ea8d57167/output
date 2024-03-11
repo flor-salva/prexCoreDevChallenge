@@ -80,57 +80,55 @@ HOST_CFLAGS = None
 cargo:rerun-if-env-changed=CFLAGS
 CFLAGS = None
 cargo:rerun-if-env-changed=CC_ENABLE_DEBUG_OUTPUT
-entropy_common.c
 debug.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-fse_decompress.c
+entropy_common.c
 error_private.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+fse_decompress.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 pool.c
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 threading.c
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 zstd_common.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-huf_compress.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 fse_compress.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+hist.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+huf_compress.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 zstd_compress.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
+exit code: 0
 zstd_compress_literals.c
-hist.c
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-zstd_compress_sequences.c
-zstd_compress_superblock.c
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-exit code: 0
-exit code: 0
-exit code: 0
-exit code: 0
-exit code: 0
-exit code: 0
-exit code: 0
-exit code: 0
-exit code: 0
 exit code: cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+zstd_compress_sequences.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-zstd_fast.c
-zstd_ldm.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+zstd_compress_superblock.c
 zstd_double_fast.c
+zstd_fast.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 zstd_lazy.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-zstd_opt.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-huf_decompress.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+zstd_ldm.c
 zstdmt_compress.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+zstd_opt.c
 0
 exit code: 0
 exit code: 0
@@ -142,23 +140,33 @@ exit code: 0
 exit code: 0
 exit code: 0
 zstd_ddict.c
+huf_decompress.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 zstd_decompress.c
 zstd_decompress_block.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cover.c
 divsufsort.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+zstd_v01.c
+zdict.c
 fastcover.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-zdict.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-zstd_v01.c
 zstd_v02.c
 cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+zstd_v03.c
+zstd_v05.c
+zstd_v04.c
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
+zstd_v06.c
 exit code: 0
 exit code: 0
 exit code: 0
@@ -169,15 +177,7 @@ exit code: 0
 exit code: 0
 exit code: 0
 exit code: cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-zstd_v03.c
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-zstd_v04.c
-zstd_v05.c
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
-cargo:warning=cl : Command line warning D9002 : ignoring unknown option '-fvisibility=hidden'
 zstd_v07.c
-zstd_v06.c
 0
 exit code: 0
 exit code: 0
@@ -202,6 +202,6 @@ HOST_ARFLAGS = None
 cargo:rerun-if-env-changed=ARFLAGS
 ARFLAGS = None
 cargo:rustc-link-lib=static=zstd
-cargo:rustc-link-search=native=C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challengePrex\target\debug\build\zstd-sys-02c1fb2ea8d57167\out
-cargo:root=C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challengePrex\target\debug\build\zstd-sys-02c1fb2ea8d57167\out
+cargo:rustc-link-search=native=C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challenge_prex\target\debug\build\zstd-sys-02c1fb2ea8d57167\out
+cargo:root=C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challenge_prex\target\debug\build\zstd-sys-02c1fb2ea8d57167\out
 cargo:include=C:\Users\FlorenciaSalvatierra\.cargo\registry\src\index.crates.io-6f17d22bba15001f\zstd-sys-2.0.9+zstd.1.5.5\zstd/lib
