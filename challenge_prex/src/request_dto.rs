@@ -4,20 +4,20 @@ use rust_decimal::Decimal;
 
 #[derive(Debug, Serialize,Deserialize)]
 pub struct Cliente {
-    client_name: String,
-    bith_date: NaiveDate,
-    document_number: String,
-    country: String
+    pub client_name: String,
+    pub bith_date: NaiveDate,
+    pub document_number: String,
+    pub country: String
 }
 
 #[derive(Debug, Serialize,Deserialize)]
 pub struct CreditTransaction {
-    client_id: u32,
-    credit_amount: Decimal,
+    pub client_id: u32,
+    pub credit_amount: Decimal,
 }
 
 #[derive(Debug, Serialize,Deserialize)]
 pub struct DebitTransaction {
-    client_id: u32,
-    debit_amount: Decimal,
+    pub client_id: u32,
+    pub debit_amount: Decimal,
 }
