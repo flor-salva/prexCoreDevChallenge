@@ -1,1 +1,0 @@
-C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challengePrex\target\debug\challengePrex.exe: C:\Users\FlorenciaSalvatierra\Documents\Prex-Card\prexCoreDevChallenge\challengePrex\src\main.rs

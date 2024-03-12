@@ -1,11 +1,13 @@
-
 use std::sync::atomic::Ordering;
-use crate::{
-    repository::{generate_file_name, save_data, FILE_COUNTER}, request_dto::{Cliente, CreditTransaction, DebitTransaction}, response_dto::ClientBalance, servicios::{crear_cliente, create_file, get_cliente, procesar_transaccion, verificar_existencia_dni, AppState, TipoTransaccion}
-};
 use actix_web::{get, post, web, HttpResponse, Responder};
 use tokio::fs::OpenOptions;
-
+use crate::{
+    repository::{generate_file_name, save_data, FILE_COUNTER},
+    request_dto::{Cliente, CreditTransaction, DebitTransaction},
+    response_dto::ClientBalance, servicios::{   crear_cliente, create_file, get_cliente, 
+                                                procesar_transaccion, verificar_existencia_dni,
+                                                AppState, TipoTransaccion}
+};
 
 pub fn config(conf: &mut web::ServiceConfig) {
     let scope = web::scope("")
@@ -20,8 +22,8 @@ pub fn config(conf: &mut web::ServiceConfig) {
 
 #[get("/client_balance/{user_id}")]
 async fn client_balance(path: web::Path<(u32,)>, data: web::Data<AppState>) -> impl Responder {
-    let user_id = path.0;
 
+    let user_id = path.0;
     let mut cliente_balance = ClientBalance {
         ..Default::default()
     };
@@ -36,16 +38,12 @@ async fn client_balance(path: web::Path<(u32,)>, data: web::Data<AppState>) -> i
 }
 
 #[post("/new_client")]
-async fn new_client(
-    nuevo_cliente: web::Json<Cliente>,
-    data: web::Data<AppState>,
-) -> impl Responder {
+async fn new_client(nuevo_cliente: web::Json<Cliente>, data: web::Data<AppState>,) -> impl Responder {
+    
     let mut clients = data.clients.lock().unwrap();
 
     if verificar_existencia_dni(&nuevo_cliente, &mut clients) {
-        // Si ya existe un cliente con el mismo DNI, devolver una respuesta adecuada
-        return HttpResponse::BadRequest()
-            .body("Ya existe un cliente con este número de documento");
+        return HttpResponse::BadRequest().body("Ya existe un cliente con este número de documento");
     }
 
     let next_id = clients.len() as u32 + 1;
@@ -55,10 +53,8 @@ async fn new_client(
 }
 
 #[post("/new_credit_transaction")]
-async fn new_credit_transaction(
-    transaccion_credito: web::Json<CreditTransaction>,
-    data: web::Data<AppState>
-) -> impl Responder {
+async fn new_credit_transaction(transaccion_credito: web::Json<CreditTransaction>,data: web::Data<AppState>) -> impl Responder {
+    
     let mut map = data.clients.lock().unwrap();
     
     if let Some(cliente_encontrado) = map.get_mut(&transaccion_credito.client_id) {
@@ -85,6 +81,7 @@ async fn new_debit_transaction(transaccion_debito: web::Json<DebitTransaction>,d
 
 #[post("/store_balances")]
 async fn store_balances(state: web::Data<AppState>) -> impl Responder {
+    
     // Incrementa el contador de archivo
     let file_counter = FILE_COUNTER.fetch_add(1, Ordering::SeqCst);
    
@@ -104,7 +101,7 @@ async fn store_balances(state: web::Data<AppState>) -> impl Responder {
         Err(_) => return HttpResponse::InternalServerError().body("Error al crear el archivo"),
     };
 
-    //Dejé esta función creada pero no logro entender por qué me escribe el archivo al revés.
+    //Dejé esta función creada pero no logro entender por qué me escribe la informacion en el archivo al revés.
     /*let mut file = match create_file(&file_name).await {
         Ok(file) => file,
         Err(_) => return HttpResponse::InternalServerError().body("Error al crear el archivo"),

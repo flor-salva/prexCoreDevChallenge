@@ -8,7 +8,7 @@ pub static FILE_COUNTER: AtomicU32 = AtomicU32::new(0);
    
    
  pub  fn generate_file_name(counter: u32) -> String {
-       // Obtiene la fecha actual
+       // Obtener la fecha actual
        let current_date = Local::now();
        let formatted_date = current_date.format("%d%m%Y").to_string();
    
