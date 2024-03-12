@@ -5,10 +5,16 @@ use rust_decimal::Decimal;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
 
+pub enum TipoTransaccion {
+    Credito,
+    Debito
+}
+
+
 pub struct AppState {
     pub clients: Arc<Mutex<HashMap<u32, ClienteModel>>>,
 }
-pub fn buscar_cliente(user_id: u32, data: &Data<AppState>, cliente: &mut ClientBalance) -> bool {
+pub fn get_cliente(user_id: u32, data: &Data<AppState>, cliente: &mut ClientBalance) -> bool {
     let map = data.clients.lock().unwrap();
     match map.get(&user_id) {
         Some(cliente_encontrado) => {
@@ -24,9 +30,7 @@ pub fn buscar_cliente(user_id: u32, data: &Data<AppState>, cliente: &mut ClientB
     }
     true
 }
-pub fn verificar_existencia_dni(
-                                    nuevo_cliente: &Cliente,
-                                    data: &Data<AppState>,
+pub fn verificar_existencia_dni(    nuevo_cliente: &Cliente,
                                     clients: &mut HashMap<u32, ClienteModel>,
                                 ) -> bool {
     clients.values().any(|cliente| cliente.document_number == nuevo_cliente.document_number)
@@ -46,3 +50,5 @@ pub fn crear_cliente(next_id: u32,  nuevo_cliente: &Cliente, clients: &mut HashM
 
     clients.insert(next_id, cliente_model);
 }
+
+

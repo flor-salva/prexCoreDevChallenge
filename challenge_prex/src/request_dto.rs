@@ -13,11 +13,11 @@ pub struct Cliente {
 #[derive(Debug, Serialize,Deserialize)]
 pub struct CreditTransaction {
     pub client_id: u32,
-    pub credit_amount: Decimal,
+    pub credit_amount: Decimal
 }
 
 #[derive(Debug, Serialize,Deserialize)]
 pub struct DebitTransaction {
     pub client_id: u32,
-    pub debit_amount: Decimal,
+    pub debit_amount: Decimal
 }

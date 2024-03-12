@@ -9,7 +9,6 @@ use std::{collections::HashMap, sync::{Arc, Mutex}};
 use actix_web::{ web, App, HttpServer};
 use models::ClienteModel;
 use servicios::AppState;
-//use serde::{Serialize,Deserialize};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
