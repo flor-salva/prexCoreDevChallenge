@@ -1,10 +1,10 @@
 
 use std::sync::atomic::Ordering;
 use crate::{
-    repository::{generate_file_name, FILE_COUNTER}, request_dto::{Cliente, CreditTransaction, DebitTransaction}, response_dto::ClientBalance, servicios::{crear_cliente, get_cliente, procesar_transaccion, verificar_existencia_dni, AppState, TipoTransaccion}
+    repository::{generate_file_name, save_data, FILE_COUNTER}, request_dto::{Cliente, CreditTransaction, DebitTransaction}, response_dto::ClientBalance, servicios::{crear_cliente, create_file, get_cliente, procesar_transaccion, verificar_existencia_dni, AppState, TipoTransaccion}
 };
 use actix_web::{get, post, web, HttpResponse, Responder};
-use tokio::{fs::OpenOptions, io::AsyncWriteExt};
+use tokio::fs::OpenOptions;
 
 
 pub fn config(conf: &mut web::ServiceConfig) {
@@ -91,11 +91,10 @@ async fn store_balances(state: web::Data<AppState>) -> impl Responder {
     // Genera el nombre del archivo con el nuevo contador
     let file_name = generate_file_name(file_counter);
    
-    // obtiene el estado de la aplicación
     let clients = state.clients.lock().unwrap();
    
     // Abre o crea el archivo
-    let mut file = match OpenOptions::new()
+    let _file = match OpenOptions::new()
     .write(true)
     .append(true)
     .create(true)
@@ -104,10 +103,21 @@ async fn store_balances(state: web::Data<AppState>) -> impl Responder {
         Ok(file) => file,
         Err(_) => return HttpResponse::InternalServerError().body("Error al crear el archivo"),
     };
-   
+
+    //Dejé esta función creada pero no logro entender por qué me escribe el archivo al revés.
+    /*let mut file = match create_file(&file_name).await {
+        Ok(file) => file,
+        Err(_) => return HttpResponse::InternalServerError().body("Error al crear el archivo"),
+    };*/
+
+    let mut file = match create_file(&file_name).await {
+        Ok(file) => file,
+        Err(_) => return HttpResponse::InternalServerError().body("Error al crear el archivo"),
+    };
+
     for (client_id, client) in clients.iter() {
         let line = format!("{:02}\t{}\n", client_id, client.balance);
-        if let Err(_) = file.write_all(line.as_bytes()).await {
+        if let Err(_) = save_data(&mut file, &line).await {
             return HttpResponse::InternalServerError().body("Error al escribir en el archivo");
         }
     }

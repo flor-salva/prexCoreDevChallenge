@@ -3,8 +3,11 @@ use crate::{models::ClienteModel, response_dto::ClientBalance};
 use actix_web::web::Data;
 use actix_web::HttpResponse;
 use rust_decimal::Decimal;
+use tokio::fs::{File, OpenOptions};
+use tokio::io::Error;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
+
 
 pub enum TipoTransaccion {
     Credito,
@@ -64,5 +67,19 @@ pub fn procesar_transaccion(monto: Decimal, tipo_transaccion: TipoTransaccion, c
             cliente_encontrado.balance -= monto;
             HttpResponse::Ok().body(format!("Transacción de débito procesada. Nuevo balance: {}", cliente_encontrado.balance))
         }
+    }
+}
+
+pub async fn create_file(file_name: &str) -> Result<File, Error> {
+    let file_result = OpenOptions::new()
+        .write(true)
+        .append(true)
+        .create(true)
+        .open(file_name)
+        .await;
+
+    match file_result {
+        Ok(file) => Ok(file),
+        Err(err) => Err(err.into()),
     }
 }

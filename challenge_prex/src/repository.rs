@@ -1,6 +1,8 @@
 use std::sync::atomic::AtomicU32;
 
 use chrono::Local;
+use tokio::fs::File;
+use tokio::io::{AsyncWriteExt, Error};
 
 pub static FILE_COUNTER: AtomicU32 = AtomicU32::new(0);
    
@@ -15,3 +17,8 @@ pub static FILE_COUNTER: AtomicU32 = AtomicU32::new(0);
    
        file_name
    }
+
+pub async fn save_data(file: &mut File, data: &str) -> Result<(), Error> {
+    file.write_all(data.as_bytes()).await?;
+    Ok(())
+}
