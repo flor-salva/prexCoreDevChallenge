@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "5134418c-d3b6-4b33-9171-89cfe72bf43f",
+		"name": "Collection _PREX_Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33507223"
+	},
+	"item": [
+		{
+			"name": "New_Client",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_name\":\"Flor\",\r\n    \"bith_date\":\"1994-10-30\", \r\n    \"document_number\":\"38465901\", \r\n    \"country\":\"Argentina\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/new_client",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"new_client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New_Credit_Transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_id\":1,\r\n    \"credit_amount\":\"4545.35\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/new_credit_transaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"new_credit_transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New_Balance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/client_balance/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"client_balance",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New_Debit_Transaction",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_id\":1,\r\n    \"debit_amount\":\"1000.35\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/new_debit_transaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"new_debit_transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Store_Balances",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/store_balances",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"store_balances"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
