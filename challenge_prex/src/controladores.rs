@@ -1,15 +1,18 @@
 
+use std::sync::atomic::Ordering;
 use crate::{
-    models::ClienteModel, request_dto::{Cliente, CreditTransaction, DebitTransaction}, response_dto::ClientBalance, servicios::{crear_cliente, get_cliente, verificar_existencia_dni, AppState, TipoTransaccion}
+    repository::{generate_file_name, FILE_COUNTER}, request_dto::{Cliente, CreditTransaction, DebitTransaction}, response_dto::ClientBalance, servicios::{crear_cliente, get_cliente, procesar_transaccion, verificar_existencia_dni, AppState, TipoTransaccion}
 };
 use actix_web::{get, post, web, HttpResponse, Responder};
-use rust_decimal::Decimal;
+use tokio::{fs::OpenOptions, io::AsyncWriteExt};
+
 
 pub fn config(conf: &mut web::ServiceConfig) {
     let scope = web::scope("")
     .service(new_client)
     .service(new_credit_transaction)
     .service(new_debit_transaction)
+    .service(store_balances)
     .service(client_balance);
 
     conf.service(scope);
@@ -80,38 +83,35 @@ async fn new_debit_transaction(transaccion_debito: web::Json<DebitTransaction>,d
 
 }
 
-pub fn procesar_transaccion(monto: Decimal, tipo_transaccion: TipoTransaccion, cliente_encontrado: &mut ClienteModel) -> HttpResponse {
-    match tipo_transaccion {
-        TipoTransaccion::Credito => {
-            cliente_encontrado.balance += monto;
-            HttpResponse::Ok().body(format!("Transacción de crédito procesada. Nuevo balance: {}", cliente_encontrado.balance))
-        }
-        TipoTransaccion::Debito => {
-            if cliente_encontrado.balance < monto {
-                return HttpResponse::BadRequest().body("Fondos insuficientes para realizar la transacción de débito");
-            }
-            cliente_encontrado.balance -= monto;
-            HttpResponse::Ok().body(format!("Transacción de débito procesada. Nuevo balance: {}", cliente_encontrado.balance))
+#[post("/store_balances")]
+async fn store_balances(state: web::Data<AppState>) -> impl Responder {
+    // Incrementa el contador de archivo
+    let file_counter = FILE_COUNTER.fetch_add(1, Ordering::SeqCst);
+   
+    // Genera el nombre del archivo con el nuevo contador
+    let file_name = generate_file_name(file_counter);
+   
+    // obtiene el estado de la aplicación
+    let clients = state.clients.lock().unwrap();
+   
+    // Abre o crea el archivo
+    let mut file = match OpenOptions::new()
+    .write(true)
+    .append(true)
+    .create(true)
+    .open(&file_name)
+    .await{
+        Ok(file) => file,
+        Err(_) => return HttpResponse::InternalServerError().body("Error al crear el archivo"),
+    };
+   
+    for (client_id, client) in clients.iter() {
+        let line = format!("{:02}\t{}\n", client_id, client.balance);
+        if let Err(_) = file.write_all(line.as_bytes()).await {
+            return HttpResponse::InternalServerError().body("Error al escribir en el archivo");
         }
     }
-}
-
-/*#[post("/store_balances")]
-async fn store_balances(data: web::Data<AppState>) -> impl Responder {
-    let mut map = data.clients.lock().unwrap();
-    let store_method = FileStorage::new(FILE_PATH);
-
-    match store_method.store_data(&map) {
-        Ok(_) => {
-            map.iter_mut().for_each(|(_, cliente)| {
-                cliente.balance = Decimal::new(0, 0);
-            });
-
-            HttpResponse::Ok().json(SingleResponse {
-                status: "éxito".to_string(),
-                data: "Saldos almacenados en el archivo y reseteados correctamente en memoria".to_string(),
-            })
-        }
-        Err(e) => HttpResponse::InternalServerError().body(format!("Error: {}", e)),
-    }
-}*/
+   
+    HttpResponse::Ok().body(format!("Saldos almacenados en el archivo: {}", file_name))
+   }
+   

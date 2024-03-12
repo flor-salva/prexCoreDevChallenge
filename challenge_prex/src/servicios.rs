@@ -1,6 +1,7 @@
 use crate::request_dto::Cliente;
 use crate::{models::ClienteModel, response_dto::ClientBalance};
 use actix_web::web::Data;
+use actix_web::HttpResponse;
 use rust_decimal::Decimal;
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
@@ -9,7 +10,6 @@ pub enum TipoTransaccion {
     Credito,
     Debito
 }
-
 
 pub struct AppState {
     pub clients: Arc<Mutex<HashMap<u32, ClienteModel>>>,
@@ -51,4 +51,18 @@ pub fn crear_cliente(next_id: u32,  nuevo_cliente: &Cliente, clients: &mut HashM
     clients.insert(next_id, cliente_model);
 }
 
-
+pub fn procesar_transaccion(monto: Decimal, tipo_transaccion: TipoTransaccion, cliente_encontrado: &mut ClienteModel) -> HttpResponse {
+    match tipo_transaccion {
+        TipoTransaccion::Credito => {
+            cliente_encontrado.balance += monto;
+            HttpResponse::Ok().body(format!("Transacción de crédito procesada. Nuevo balance: {}", cliente_encontrado.balance))
+        }
+        TipoTransaccion::Debito => {
+            if cliente_encontrado.balance < monto {
+                return HttpResponse::BadRequest().body("Fondos insuficientes para realizar la transacción de débito");
+            }
+            cliente_encontrado.balance -= monto;
+            HttpResponse::Ok().body(format!("Transacción de débito procesada. Nuevo balance: {}", cliente_encontrado.balance))
+        }
+    }
+}

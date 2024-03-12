@@ -3,6 +3,7 @@ mod response_dto;
 mod controladores;
 mod servicios;
 mod models;
+mod repository;
 
 use std::{collections::HashMap, sync::{Arc, Mutex}};
 
